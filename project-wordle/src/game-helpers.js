@@ -40,6 +40,10 @@ export function checkGuess(guess, answer) {
     const misplacedIndex = answerChars.findIndex(
       (char) => char === guessChars[i]
     );
+<<<<<<< HEAD
+=======
+    
+>>>>>>> b31c349d42cd915b6eb588c6a79c72f31d435048
     if (misplacedIndex >= 0) {
       status = 'misplaced';
       answerChars[misplacedIndex] = SOLVED_CHAR;

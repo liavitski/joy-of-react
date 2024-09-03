@@ -5,9 +5,17 @@ node_modules
 .pnp
 .pnp.js
 
+<<<<<<< HEAD
 # parcel-generated files
 dist
 .parcel-cache
+=======
+# testing
+coverage
+
+# production
+build
+>>>>>>> b31c349d42cd915b6eb588c6a79c72f31d435048
 
 # misc
 .DS_Store
