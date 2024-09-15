@@ -2,11 +2,12 @@ import React from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
-<<<<<<< HEAD
-=======
-import InputForm from '../InputForm/InputForm';
-import Results from '../Results/Results';
->>>>>>> b31c349d42cd915b6eb588c6a79c72f31d435048
+import GuessInput from '../GuessInput/GuessInput';
+import GuessResults from '../GuessResults/GuessResults';
+import Banner from '../Banner/Banner';
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import WinBanner from '../WinBanner';
+import LoseBanner from '../LoseBanner';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -14,22 +15,31 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-<<<<<<< HEAD
-  return <>Put a game here!</>;
-=======
+  const [gameStatus, setGameStatus] = React.useState('running');
   const [results, setResults] = React.useState([]);
 
-  function handleResults(guess) {
-    setResults([...results, guess]);
+  function addResult(guess) {
+    const guessObj = { guess, id: crypto.randomUUID() };
+    const newResults = [...results, guessObj];
+    setResults(newResults);
+
+    if (guess.toUpperCase() === answer) {
+      setGameStatus('win');
+    } else if (newResults.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus('lose');
+    }
   }
 
   return (
     <>
-      <Results results={results} />
-      <InputForm handleResults={handleResults} />
+      <GuessResults results={results} answer={answer} />
+      <GuessInput addResult={addResult} gameStatus={gameStatus} />
+      {gameStatus === 'win' && (
+        <WinBanner numOfGuesses={results.length} />
+      )}
+      {gameStatus === 'lose' && <LoseBanner answer={answer} />}
     </>
   );
->>>>>>> b31c349d42cd915b6eb588c6a79c72f31d435048
 }
 
 export default Game;
