@@ -1,14 +1,14 @@
 import React from 'react';
 import Banner from '../Banner/Banner';
 
-function WinBanner({ numOfGuesses }) {
+function WonBanner({ numOfGuesses }) {
   return (
     <Banner status="happy">
       <p>
         <strong>Congratulations!</strong> Got it in
         <strong>
           {' '}
-          {numOfGuesses} {numOfGuesses > 1 ? 'guesses' : 'guess'}
+          {numOfGuesses < 2 ? '1 guess' : `${numOfGuesses} guesses`}
         </strong>
         .
       </p>
@@ -16,4 +16,4 @@ function WinBanner({ numOfGuesses }) {
   );
 }
 
-export default WinBanner;
+export default WonBanner;

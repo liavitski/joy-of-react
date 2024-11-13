@@ -13,4 +13,3 @@ export const range = (start, end, step = 1) => {
   }
   return output;
 };
-
