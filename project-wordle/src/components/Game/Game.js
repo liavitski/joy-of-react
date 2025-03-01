@@ -11,6 +11,8 @@ import WonBanner from '../WonBanner/WonBanner';
 import LostBanner from '../LostBanner/LostBanner';
 import Keyboard from '../Keyboard/Keyboard';
 
+/* some test code */
+
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
