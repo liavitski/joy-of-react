@@ -3,10 +3,17 @@ import React from 'react';
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
 
-import { checkGuess } from '../../game-helpers';
-import InputForm from '../InputForm';
+import GuessInput from '../GuessInput/GuessInput';
 import GuessResults from '../GuessResults/GuessResults';
-import Banner from '../Banner';
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import { checkGuess } from '../../game-helpers';
+import WonBanner from '../WonBanner/WonBanner';
+import LostBanner from '../LostBanner/LostBanner';
+import Keyboard from '../Keyboard/Keyboard';
+
+function testFn() {
+  return undefined;
+}
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -18,42 +25,53 @@ function testFn() {
 }
 
 function Game() {
+  const [answer, setAnswer] = React.useState(() => sample(WORDS));
+
+  const [status, setStatus] = React.useState('running');
+
   const [guesses, setGuesses] = React.useState([]);
-  const [gameStatus, setGameStatus] = React.useState('idle');
 
-  const numberOfGuesses = guesses.length;
-
-  function handleSubmit(guess) {
-    if (guess === answer) {
-      setGameStatus('win');
-    }
-
-    if (numberOfGuesses >= 5 && guess !== answer) {
-      setGameStatus('lose');
-    }
-
-    const newGuess = {
-      guess,
-      id: crypto.randomUUID(),
-    };
+  function handleSubmitGuess(guess) {
+    const newGuess = { value: guess, id: crypto.randomUUID() };
     const newGuesses = [...guesses, newGuess];
-
     setGuesses(newGuesses);
+
+    if (guess.toUpperCase() === answer) {
+      setStatus('won');
+    } else if (newGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+      setStatus('lost');
+    }
   }
+
+  function handleRestart() {
+    const newAnswer = sample(WORDS);
+    setAnswer(newAnswer);
+    setGuesses([]);
+    setStatus('running');
+  }
+
+  const validatedGuesses = guesses.map(({ value }) =>
+    checkGuess(value, answer)
+  );
 
   return (
     <>
-      <GuessResults guesses={guesses} answer={answer} />
-      <InputForm
-        handleSubmit={handleSubmit}
-        gameStatus={gameStatus}
+      <GuessResults guesses={validatedGuesses} />
+      <GuessInput
+        handleSubmitGuess={handleSubmitGuess}
+        status={status}
       />
-      {gameStatus !== 'idle' && (
-        <Banner
-          status={gameStatus}
-          answer={answer}
-          numberOfGuesses={numberOfGuesses}
+
+      <Keyboard validatedGuesses={validatedGuesses} />
+
+      {status === 'won' && (
+        <WonBanner
+          numOfGuesses={guesses.length}
+          handleRestart={handleRestart}
         />
+      )}
+      {status === 'lost' && (
+        <LostBanner answer={answer} handleRestart={handleRestart} />
       )}
     </>
   );
