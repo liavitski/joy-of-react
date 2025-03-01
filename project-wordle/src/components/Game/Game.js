@@ -13,6 +13,10 @@ const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
 console.info({ answer });
 
+function testFn() {
+  return null;
+}
+
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
   const [gameStatus, setGameStatus] = React.useState('idle');
