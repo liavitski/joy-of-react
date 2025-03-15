@@ -6,7 +6,6 @@ import {
   Info,
   X,
 } from 'react-feather';
-import { ToastContext } from '../ToastProvider/ToastProvider';
 
 import VisuallyHidden from '../VisuallyHidden';
 
@@ -19,31 +18,18 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ variant, id, children }) {
-  const className = `${styles.toast} ${styles[variant]}`;
-
-  const { removeToast } = React.useContext(ToastContext);
-
-  const Icon = ICONS_BY_VARIANT[variant];
-
+function Toast() {
   return (
-    <div className={className}>
+    <div className={`${styles.toast} ${styles.notice}`}>
       <div className={styles.iconContainer}>
-        <Icon size={24} />
+        <Info size={24} />
       </div>
       <p className={styles.content}>
-        <VisuallyHidden>{variant}</VisuallyHidden>
-        {children}
+        16 photos have been uploaded
       </p>
-      <button
-        className={styles.closeButton}
-        onClick={() => {
-          removeToast(id);
-        }}
-        aria-label="Dismiss message"
-        aria-live="off"
-      >
+      <button className={styles.closeButton}>
         <X size={24} />
+        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
     </div>
   );
