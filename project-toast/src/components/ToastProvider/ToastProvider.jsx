@@ -5,6 +5,20 @@ export const ToastContext = React.createContext();
 function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([]);
 
+  React.useEffect(() => {
+    function handleEscape(event) {
+      if (event.code === 'Escape') {
+        setToasts([]);
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
   function handleDismiss(id) {
     const newToasts = toasts.filter((toast) => {
       return toast.id !== id;
@@ -28,8 +42,8 @@ function ToastProvider({ children }) {
   return (
     <ToastContext.Provider
       value={{
-        handleDismiss,
         toasts,
+        handleDismiss,
         createToast,
       }}
     >
