@@ -19,7 +19,7 @@ function BlogHero({ title, publishedOn, className, ...delegated }) {
         <h1>{title}</h1>
         <p>
           Published on{' '}
-          <time dateTime={publishedOn.toISOString()}>{humanizedDate}</time>
+          <time dateTime={publishedOn}>{humanizedDate}</time>
         </p>
       </div>
     </header>
