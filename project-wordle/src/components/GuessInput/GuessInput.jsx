@@ -1,34 +1,30 @@
 import React from 'react';
 
-import { checkGuess } from '../../game-helpers';
-
-function GuessInput({ handleSubmitGuess, status }) {
-  const [tentativeGuess, setTentativeGuess] = React.useState('');
+function GuessInput() {
+  const [guess, setGuess] = React.useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    handleSubmitGuess(tentativeGuess);
-    setTentativeGuess('');
+    console.log(guess);
+    setGuess('');
   }
 
   return (
     <form className="guess-input-wrapper" onSubmit={handleSubmit}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
-        disabled={status !== 'running'}
-        required
-        minLength={5}
-        maxLength={5}
-        pattern="^[A-Za-z]{5}$"
-        title="Enter 5 letter word"
         id="guess-input"
         type="text"
-        value={tentativeGuess}
-        onChange={(event) => {
-          const nextGuess = event.target.value.toUpperCase();
-          setTentativeGuess(nextGuess);
-        }}
+        value={guess}
+        onChange={(event) =>
+          setGuess(event.target.value.toUpperCase())
+        }
+        pattern="[A-Za-z]{5}"
+        // placeholder="Enter 5 letter word"
+        minLength={5}
+        maxLength={5}
+        title="Please enter exacly 5 letters"
+        required
       />
     </form>
   );
