@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GuessInput({ handleSubmitGuess }) {
+function GuessInput({ handleSubmitGuess, gameStatus }) {
   const [tentativeGuess, setTentativeGuess] = React.useState('');
 
   function handleSubmit(event) {
@@ -26,6 +26,7 @@ function GuessInput({ handleSubmitGuess }) {
         title="Please enter exacly 5 letters"
         required
         autoFocus
+        disabled={gameStatus === 'win' || gameStatus === 'lose'}
       />
     </form>
   );
