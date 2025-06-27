@@ -9,15 +9,14 @@ import HappyBanner from '../HappyBanner/HappyBanner';
 import SadBanner from '../SadBanner/SadBanner';
 import Keyboard from '../Keyboard/Keyboard';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+  const [answer, setAnswer] = React.useState(() => sample(WORDS));
   const [results, setResults] = React.useState([]);
   const [gameStatus, setGameStatus] = React.useState('idle'); // idle, lose, win
   const numOfGuesses = results.length;
+
+  // show answer
+  console.info({ answer });
 
   function handleSubmitGuess(tentativeGuess) {
     const checkedGuess = checkGuess(tentativeGuess, answer);
@@ -31,6 +30,13 @@ function Game() {
     }
   }
 
+  function handleRestart() {
+    const newAnswer = sample(WORDS);
+    setAnswer(newAnswer);
+    setResults([]);
+    setGameStatus('idle');
+  }
+
   return (
     <>
       <GuessResults results={results} />
@@ -40,9 +46,14 @@ function Game() {
       />
       <Keyboard results={results} />
       {gameStatus === 'win' && (
-        <HappyBanner numOfGuesses={numOfGuesses} />
+        <HappyBanner
+          numOfGuesses={numOfGuesses}
+          handleRestart={handleRestart}
+        />
       )}
-      {gameStatus === 'lose' && <SadBanner answer={answer} />}
+      {gameStatus === 'lose' && (
+        <SadBanner answer={answer} handleRestart={handleRestart} />
+      )}
     </>
   );
 }
