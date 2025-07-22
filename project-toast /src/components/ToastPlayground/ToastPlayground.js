@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Button from '../Button';
-import Toast from '../Toast';
 
 import styles from './ToastPlayground.module.css';
+import ToastShelf from '../ToastShelf/ToastShelf';
 
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
@@ -18,6 +18,7 @@ function ToastPlayground() {
     const newToasts = [...toasts, newValue];
     setToasts(newToasts);
     setMessage('');
+    setVariant(VARIANT_OPTIONS[0]);
   }
 
   function deleteToast(id) {
@@ -32,17 +33,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {toasts.map(({ message, variant, id }) => {
-        return (
-          <Toast
-            message={message}
-            variant={variant}
-            key={id}
-            id={id}
-            handleDelete={deleteToast}
-          />
-        );
-      })}
+      <ToastShelf toasts={toasts} handleDelete={deleteToast} />
 
       <form className={styles.controlsWrapper} onSubmit={submitToast}>
         <div className={styles.row}>
