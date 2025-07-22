@@ -12,16 +12,20 @@ function ToastPlayground() {
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
   const [toasts, setToasts] = React.useState([]);
 
-  function submitToast(event) {
+  function handleCreateToast(event) {
     event.preventDefault();
-    const newValue = { message, variant, id: crypto.randomUUID() };
-    const newToasts = [...toasts, newValue];
+
+    const newToasts = [
+      ...toasts,
+      { message, variant, id: crypto.randomUUID() },
+    ];
+
     setToasts(newToasts);
     setMessage('');
     setVariant(VARIANT_OPTIONS[0]);
   }
 
-  function deleteToast(id) {
+  function handleDismiss(id) {
     const newToasts = toasts.filter((toast) => toast.id !== id);
     setToasts(newToasts);
   }
@@ -33,9 +37,9 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      <ToastShelf toasts={toasts} handleDelete={deleteToast} />
+      <ToastShelf toasts={toasts} handleDismiss={handleDismiss} />
 
-      <form className={styles.controlsWrapper} onSubmit={submitToast}>
+      <form className={styles.controlsWrapper} onSubmit={handleCreateToast}>
         <div className={styles.row}>
           <label
             htmlFor="message"
