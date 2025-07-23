@@ -9,9 +9,9 @@ import { ToastContext } from '../ToastProvider/ToastProvider';
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
-  const { createToast } = React.useContext(ToastContext);
   const [message, setMessage] = React.useState('');
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
+  const { createToast } = React.useContext(ToastContext);
 
   function handleCreateToast(event) {
     event.preventDefault();
