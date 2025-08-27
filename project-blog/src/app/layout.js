@@ -25,7 +25,7 @@ const monoFont = Spline_Sans_Mono({
 export const metadata = {
   title: {
     template: `%s • ${BLOG_TITLE}`,
-    default: 'Bits & Bytes',
+    default: BLOG_TITLE,
   },
   description: 'A wonderful blog about JavaScript',
 };
